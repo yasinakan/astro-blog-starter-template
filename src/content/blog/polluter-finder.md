@@ -1,24 +1,27 @@
 ---
 title: "Polluter Finder"
-description: "A community-driven project to spot, report, and help fight polluters in our environment."
+description: "A tool that hunts down the PR or commit that polluted your build by breaking the tests."
 pubDate: "Jun 19 2026"
 heroImage: "/blog-placeholder-1.jpg"
 ---
 
-**Polluter Finder** is a project built to help us attend to and fight pollution at its source. Instead of treating pollution as an abstract, faraway problem, Polluter Finder gives communities a practical way to identify who and what is harming the environment around them — and to do something about it.
+**Polluter Finder** is a project that helps you find the commit responsible for your test failures. When a test suite goes red, the hardest question is usually *which change broke it?* — and Polluter Finder is built to answer exactly that.
 
-## Why Polluter Finder?
+## The idea
 
-Pollution rarely happens in a vacuum. Factories dump waste into rivers, illegal sites burn refuse, and runoff quietly poisons soil and water. The hardest part is often not caring about the problem, but *seeing* it clearly and knowing where to direct attention. Polluter Finder exists to close that gap.
+Think of a broken build as a polluted one: somewhere in the stream of merged pull requests, one change introduced the failure. Polluter Finder finds the polluter.
 
-## What it does
+## How it works
 
-- **Spot it.** Anyone can flag a suspected source of pollution — a smoking stack, a discolored stream, an illegal dump.
-- **Report it.** Reports are collected with location and context so they can be verified and acted on.
-- **Fight it.** Aggregated data helps communities, journalists, and regulators hold polluters accountable.
+For a range of suspect changes, Polluter Finder automates the tedious detective work:
 
-## How it helps the fight
+1. **Clone each PR / commit.** It checks out every candidate revision, one at a time.
+2. **Build it.** Each revision is built in a clean state so results are reproducible.
+3. **Run the tests.** The suite runs against that exact revision.
+4. **Identify the culprit.** By comparing which revisions pass and which fail, it pinpoints the PR or commit that first introduced the failure.
 
-By turning scattered observations into structured, shareable information, Polluter Finder turns individual frustration into collective action. Every report builds a clearer picture of where harm is happening, who is responsible, and what needs to change.
+## Why it helps
 
-This is just the beginning. As the project grows, the goal is to make it easier than ever to find polluters — and harder than ever for them to hide.
+Instead of manually bisecting history, rebuilding by hand, and re-running tests over and over, you let Polluter Finder do the loop for you. The result is a clear answer: *this* commit is the one that broke things — so you can revert, fix, or follow up with confidence.
+
+It turns "something in the last dozen merges broke the build" into "here is the exact change to look at."
